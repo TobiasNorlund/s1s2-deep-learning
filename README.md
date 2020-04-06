@@ -29,16 +29,16 @@ Let's take a concrete example. The model is given the following input:
 ```
 97+53
 ```
-Based on this, System 2 is expected to generate the following string of tokens constituting a query to System 1:
+Based on this, **System 2** is expected to generate the following string of tokens constituting a query to System 1:
 ```
 Q0+7+3E
 ```
-The following string will trigger System 1, which is expected to generate the the string:
+The following string will trigger **System 1**, which is expected to generate the string:
 ```
 10
 ```
 Note that the `0` is the first digit of the final answer, while the carry bit is needed for the next single digit 
-addition. System 2 is now expected to generate the string
+addition. **System 2** is now expected to generate the string
 ```
 Q1+9+5E
 ```
@@ -58,19 +58,31 @@ Concatenating all strings, the full example becomes:
 
 ### Why is this interesting?
 
+Want to show that reasoning-like tasks can more easily be learnt by transfer learning using self-supervision.
+Here: Can this task be learnt more sample efficiently if utilizing a pretrained model capable of adding single digit 
+numbers?
+
  1. How should System 2 be trained?
    - How does supervised loss vs reinforcement loss affect sample efficiency?
+   - Can system 2 be trained more sample efficiently by sharing weights with (possibly pretrained) system 1?
  2. How should System 1 be trained?
-   - De-noising objective
-   - Jointly with system 2. How does that affect sample efficiency?
+   - Pretrained on `Qa+b+cEde` examples using de-noising objective
+   - Jointly with system 2's feedback  (supevised of reinforcement) (backprop system 2 loss down to the `de` tokens)
+   - Investigate sample efficiency when interpolating between the two (perfectly pretrained is most efficient, and
+     no pretraining is least efficient)
+
+Bridge to NLP and learning to reason: 
+ - What perplexity of system 1 is required for it to be feasible to teach a system 2? 
 
 
 ### Execution plan
 
-- [ ] Hard-coded (perfect) System 1. Train System 2 using supervised loss => Baseline for sample efficiency
-- [ ] Train System 1 and System 2 jointly using supervised loss. Also train System 1 with de-noising loss
-- [ ] Hard-coded (perfect) System 1. Train System 2 using reinforcement loss
-- [ ] Train System 1 using de-noising + reinforcement loss. Train System 2 using reinforcement loss.
+1. Hard-coded (perfect) System 1. Train System 2 using supervised feedback (Easiest task possible) => Baseline for sample efficiency
+2. Hard-coded (perfect) System 1. Train System 2 using reinforcement feedback
+3. Train System 1 and System 2 jointly using supervised feedback
+4. Train System 1 and System 2 jointly using reinforcement feedback. (Hardest task possible)
+5. Train System 1 using varying degree of pre-training + System 2 supervised feedback 
+6. Train System 1 using varying degree of pre-training + System 2 reinforcement feedback 
 
 
 ## Using the repo
