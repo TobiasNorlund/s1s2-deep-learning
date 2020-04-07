@@ -36,15 +36,18 @@ Q0+7+3E
 The following string will trigger **System 1**, which is expected to generate the string:
 ```
 10
+05
 ```
 Note that the `0` is the first digit of the final answer, while the carry bit is needed for the next single digit 
 addition. **System 2** is now expected to generate the string
 ```
 Q1+9+5E
+Q0+9+5E
 ```
 where the `1` is taken from the previous System 1 output. System 1 should generate
 ```
 15
+14
 ```
 From here, System 2 should realize that all necessary computations have now been performed, and that the final answer 
 can now be copied from the partial results. System 2 should output
@@ -62,17 +65,18 @@ Want to show that reasoning-like tasks can more easily be learnt by transfer lea
 Here: Can this task be learnt more sample efficiently if utilizing a pretrained model capable of adding single digit 
 numbers?
 
- 1. How should System 2 be trained?
+1. How should System 2 be trained?
    - How does supervised loss vs reinforcement loss affect sample efficiency?
    - Can system 2 be trained more sample efficiently by sharing weights with (possibly pretrained) system 1?
- 2. How should System 1 be trained?
+2. How should System 1 be trained?
    - Pretrained on `Qa+b+cEde` examples using de-noising objective
    - Jointly with system 2's feedback  (supevised of reinforcement) (backprop system 2 loss down to the `de` tokens)
    - Investigate sample efficiency when interpolating between the two (perfectly pretrained is most efficient, and
      no pretraining is least efficient)
 
-Bridge to NLP and learning to reason: 
- - What perplexity of system 1 is required for it to be feasible to teach a system 2? 
+Bridge to NLP and learning-to-reason: 
+ - What perplexity of system 1 is required for it to be feasible to teach a system 2?
+ - 
 
 
 ### Execution plan
