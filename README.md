@@ -42,12 +42,10 @@ Note that the `0` is the first digit of the final answer, while the carry bit is
 addition. **System 2** is now expected to generate the string
 ```
 Q1+9+5E
-Q0+9+5E
 ```
 where the `1` is taken from the previous System 1 output. System 1 should generate
 ```
 15
-14
 ```
 From here, System 2 should realize that all necessary computations have now been performed, and that the final answer 
 can now be copied from the partial results. System 2 should output

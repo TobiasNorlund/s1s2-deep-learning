@@ -8,7 +8,7 @@ do
     if [ $arg == "gpu" ]; then
       RUNTIME_ARGS="--runtime nvidia"
     elif [ $arg == "notebook" ]; then
-      JUPYTER_PORT="-p 8888:8888"
+      JUPYTER_PORT="-p 8888:8888 -w /opt/project/notebooks"
     elif [ $arg == "tensorboard" ]; then
       TENSORBOARD_PORT="-p 6006:6006"
     else
